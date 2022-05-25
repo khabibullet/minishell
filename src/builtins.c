@@ -6,7 +6,7 @@
 /*   By: anemesis <anemesis@student.21-school.ru>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:19:56 by anemesis          #+#    #+#             */
-/*   Updated: 2022/05/23 21:52:10 by anemesis         ###   ########.fr       */
+/*   Updated: 2022/05/25 15:30:46 by anemesis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,13 @@ void	exec_echo(char **args)
 
 void	exec_env(t_env env_list)
 {
-	t_node	*tmp_line;
+	t_node	*tmp_node;
 
-	tmp_line = env_list.head;
-	while (tmp_line)
+	tmp_node = env_list.head;
+	while (tmp_node)
 	{
-		printf("%s=%s\n", tmp_line->key, tmp_line->value);
-		tmp_line = tmp_line->next;
+		printf("%s=%s\n", tmp_node->key, tmp_node->value);
+		tmp_node = tmp_node->next;
 	}
 }
 
@@ -69,6 +69,47 @@ void	exec_unset(char **args, t_env *env_list)
 				env_list->size--;
 			}
 		}
+		i++;
+	}
+}
+
+void	exec_export(char **args, t_env *env_list)
+{
+	t_node	*tmp;
+	int		i;
+	char	**pair;
+
+	if (args[1] == NULL)
+	{
+		export_declare(*env_list);
+		return ;
+	}
+	i = 1;
+	while (args[i])
+	{
+		pair = split_by_first_occur(args[i], '=');
+		if (is_all_chars_valid(pair[KEY]) == INVALID)
+		{
+			printf("minishell: export: `%s': not a valid identifier\n",
+				pair[KEY]);
+			free(pair[KEY]);
+			if (pair[VALUE] != NULL)
+				free(pair[VALUE]);
+		}
+		else if (pair[VALUE] == NULL)
+			free(pair[KEY]);
+		else
+		{
+			tmp = find_node_by_key(pair[KEY], env_list);
+			if (tmp != NULL)
+			{
+				free(tmp->value);
+				tmp->value = pair[VALUE];
+			}
+			else
+				add_new_env_node(env_list, pair[KEY], pair[VALUE]);
+		}
+		free(pair);
 		i++;
 	}
 }

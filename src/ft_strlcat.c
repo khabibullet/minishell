@@ -1,28 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcmp.c                                        :+:      :+:    :+:   */
+/*   ft_strlcat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anemesis <anemesis@student.21-school.ru>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/22 14:10:57 by anemesis          #+#    #+#             */
-/*   Updated: 2022/05/24 15:00:11 by anemesis         ###   ########.fr       */
+/*   Created: 2021/10/26 14:24:50 by anemesis          #+#    #+#             */
+/*   Updated: 2022/05/24 15:47:14 by anemesis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../shell.h"
 
-int	ft_strcmp(const char *s1, const char *s2)
+size_t	ft_strlcat(char *dest, const char *src, size_t destsize)
 {
 	size_t	i;
-	int		dif;
+	size_t	destlen;
+	size_t	srclen;
 
+	srclen = ft_strlen(src);
+	destlen = 0;
+	while (dest[destlen] && destlen < destsize)
+		destlen++;
+	if (destlen == destsize)
+		return (srclen + destsize);
 	i = 0;
-	dif = 0;
-	while (dif == 0 && (s1[i] != 0 || s2[i] != 0))
+	while ((destlen + i + 1 < destsize) && src[i])
 	{
-		dif = (unsigned char)s1[i] - (unsigned char)s2[i];
+		dest[destlen + i] = src[i];
 		++i;
 	}
-	return (dif);
+	dest[destlen + i] = '\0';
+	return (srclen + destlen);
 }

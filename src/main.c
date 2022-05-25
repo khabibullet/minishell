@@ -6,7 +6,7 @@
 /*   By: anemesis <anemesis@student.21-school.ru>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 15:29:24 by anemesis          #+#    #+#             */
-/*   Updated: 2022/05/23 21:49:43 by anemesis         ###   ########.fr       */
+/*   Updated: 2022/05/25 15:31:35 by anemesis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,6 @@
 // 	return ;
 // }
 
-// void	exec_export(char **args, t_env *env_list)
-// {
-	
-// }
-
 void	exec_builtin(char **args, char **env)
 {
 	// char	buf[1000];
@@ -82,14 +77,18 @@ void	exec_builtin(char **args, char **env)
 int	main(int argc, char **argv, char **env)
 {
 	t_env	env_list;
-	char *args[] = {"unset", "TMPDIR", "=", NULL};
+	char *args[] = {"export", NULL};
+	// int	i;
 	(void)argc;
 	(void)argv;
 	// (void)env;
-	// (void)args;
 	init_env_list(&env_list);
 	env_list = copy_env(env);
-	exec_unset(args, &env_list);
-	// exec_env(env_list);
+	printf("\n\n\n");
+	exec_env(env_list);
+	printf("\n\n\n");
+	exec_export(args, &env_list);
+	exec_env(env_list);
+	destroy_env_list(&env_list);
 	return (0);
 }

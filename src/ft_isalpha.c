@@ -1,28 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcmp.c                                        :+:      :+:    :+:   */
+/*   ft_isalpha.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anemesis <anemesis@student.21-school.ru>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/22 14:10:57 by anemesis          #+#    #+#             */
-/*   Updated: 2022/05/24 15:00:11 by anemesis         ###   ########.fr       */
+/*   Created: 2021/10/26 14:22:37 by anemesis          #+#    #+#             */
+/*   Updated: 2022/05/24 18:45:11 by anemesis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../shell.h"
 
-int	ft_strcmp(const char *s1, const char *s2)
+int	ft_isalpha(int c)
 {
-	size_t	i;
-	int		dif;
-
-	i = 0;
-	dif = 0;
-	while (dif == 0 && (s1[i] != 0 || s2[i] != 0))
-	{
-		dif = (unsigned char)s1[i] - (unsigned char)s2[i];
-		++i;
-	}
-	return (dif);
+	if ((64 < c && c < 91) || (96 < c && c < 123))
+		return (1);
+	else
+		return (0);
 }
