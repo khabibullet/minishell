@@ -1,32 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_max_min_abs.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anemesis <anemesis@student.21-school.ru>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/22 15:29:24 by anemesis          #+#    #+#             */
-/*   Updated: 2022/05/25 17:05:46 by anemesis         ###   ########.fr       */
+/*   Created: 2022/03/17 18:14:50 by anemesis          #+#    #+#             */
+/*   Updated: 2022/03/17 18:27:34 by anemesis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../shell.h"
+#include "../libft.h"
 
-int	main(int argc, char **argv, char **env)
+int	ft_max(int a, int b)
 {
-	t_env	env_list;
-	char *args[] = {"export", "arg=2", NULL};
-	// int	i;
-	(void)argc;
-	(void)argv;
-	// (void)env;
-	init_env_list(&env_list);
-	env_list = copy_env(env);
-	printf("\n\n\n");
-	exec_env(env_list);
-	printf("\n\n\n");
-	exec_export(args, &env_list);
-	exec_env(env_list);
-	destroy_env_list(&env_list);
-	return (0);
+	if (a > b)
+		return (a);
+	return (b);
+}
+
+int	ft_min(int a, int b)
+{
+	if (a < b)
+		return (a);
+	return (b);
+}
+
+int	ft_abs(int a)
+{
+	if (a < 0)
+		return (-a);
+	return (a);
 }

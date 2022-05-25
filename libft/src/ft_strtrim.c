@@ -1,32 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anemesis <anemesis@student.21-school.ru>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/22 15:29:24 by anemesis          #+#    #+#             */
-/*   Updated: 2022/05/25 17:05:46 by anemesis         ###   ########.fr       */
+/*   Created: 2021/10/26 17:54:28 by anemesis          #+#    #+#             */
+/*   Updated: 2022/03/12 20:23:35 by anemesis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../shell.h"
+#include "../libft.h"
 
-int	main(int argc, char **argv, char **env)
+char	*ft_strtrim(char const *s1, char const *set)
 {
-	t_env	env_list;
-	char *args[] = {"export", "arg=2", NULL};
-	// int	i;
-	(void)argc;
-	(void)argv;
-	// (void)env;
-	init_env_list(&env_list);
-	env_list = copy_env(env);
-	printf("\n\n\n");
-	exec_env(env_list);
-	printf("\n\n\n");
-	exec_export(args, &env_list);
-	exec_env(env_list);
-	destroy_env_list(&env_list);
-	return (0);
+	char	*trim;
+	size_t	len;
+
+	if (!s1 || !set)
+		return (NULL);
+	while (*s1 && ft_strchr(set, *s1))
+		s1++;
+	len = ft_strlen(s1);
+	while (len && ft_strchr(set, s1[len]))
+		len--;
+	trim = ft_substr(s1, 0, len + 1);
+	return (trim);
 }

@@ -1,32 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_puthex.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anemesis <anemesis@student.21-school.ru>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/22 15:29:24 by anemesis          #+#    #+#             */
-/*   Updated: 2022/05/25 17:05:46 by anemesis         ###   ########.fr       */
+/*   Created: 2021/11/24 16:56:44 by anemesis          #+#    #+#             */
+/*   Updated: 2022/03/12 20:22:35 by anemesis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../shell.h"
+#include "../libft.h"
 
-int	main(int argc, char **argv, char **env)
+int	ft_puthex(unsigned int n, char specifier)
 {
-	t_env	env_list;
-	char *args[] = {"export", "arg=2", NULL};
-	// int	i;
-	(void)argc;
-	(void)argv;
-	// (void)env;
-	init_env_list(&env_list);
-	env_list = copy_env(env);
-	printf("\n\n\n");
-	exec_env(env_list);
-	printf("\n\n\n");
-	exec_export(args, &env_list);
-	exec_env(env_list);
-	destroy_env_list(&env_list);
-	return (0);
+	int	rem;
+	int	count;
+
+	count = 0;
+	if (n >= 16)
+		count += ft_puthex(n / 16, specifier);
+	rem = n % 16;
+	if (rem > 9)
+		rem = rem - 10 + specifier - 23;
+	else
+		rem = rem + '0';
+	count += ft_putchar(rem);
+	return (count);
 }

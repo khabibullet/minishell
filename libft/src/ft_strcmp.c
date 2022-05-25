@@ -1,32 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anemesis <anemesis@student.21-school.ru>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/22 15:29:24 by anemesis          #+#    #+#             */
-/*   Updated: 2022/05/25 17:05:46 by anemesis         ###   ########.fr       */
+/*   Created: 2022/05/22 14:10:57 by anemesis          #+#    #+#             */
+/*   Updated: 2022/05/24 15:00:11 by anemesis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../shell.h"
 
-int	main(int argc, char **argv, char **env)
+int	ft_strcmp(const char *s1, const char *s2)
 {
-	t_env	env_list;
-	char *args[] = {"export", "arg=2", NULL};
-	// int	i;
-	(void)argc;
-	(void)argv;
-	// (void)env;
-	init_env_list(&env_list);
-	env_list = copy_env(env);
-	printf("\n\n\n");
-	exec_env(env_list);
-	printf("\n\n\n");
-	exec_export(args, &env_list);
-	exec_env(env_list);
-	destroy_env_list(&env_list);
-	return (0);
+	size_t	i;
+	int		dif;
+
+	i = 0;
+	dif = 0;
+	while (dif == 0 && (s1[i] != 0 || s2[i] != 0))
+	{
+		dif = (unsigned char)s1[i] - (unsigned char)s2[i];
+		++i;
+	}
+	return (dif);
 }

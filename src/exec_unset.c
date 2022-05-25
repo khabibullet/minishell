@@ -6,11 +6,35 @@
 /*   By: anemesis <anemesis@student.21-school.ru>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 16:40:50 by anemesis          #+#    #+#             */
-/*   Updated: 2022/05/25 16:57:28 by anemesis         ###   ########.fr       */
+/*   Updated: 2022/05/25 17:01:36 by anemesis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../shell.h"
+
+static void	unlink_node(t_node *tmp, t_env *env_list)
+{
+	if (tmp->prev != NULL && tmp->next != NULL)
+	{
+		tmp->prev->next = tmp->next;
+		tmp->next->prev = tmp->prev;
+	}
+	else if (tmp->prev == NULL && tmp->next == NULL)
+	{
+		env_list->head = NULL;
+		env_list->tail = NULL;
+	}
+	else if (tmp->prev == NULL)
+	{
+		env_list->head = tmp->next;
+		tmp->next->prev = NULL;
+	}
+	else
+	{
+		env_list->tail = tmp->prev;
+		tmp->prev->next = NULL;
+	}
+}
 
 void	exec_unset(char **args, t_env *env_list)
 {

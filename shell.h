@@ -6,7 +6,7 @@
 /*   By: anemesis <anemesis@student.21-school.ru>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 15:29:12 by anemesis          #+#    #+#             */
-/*   Updated: 2022/05/25 16:53:35 by anemesis         ###   ########.fr       */
+/*   Updated: 2022/05/25 17:02:42 by anemesis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,10 @@ char	*ft_strchr(const char *s, int c);
 int		ft_isalpha(int c);
 
 void	init_env_list(t_env *env);
+void	destroy_env_list(t_env *env_list);
 void	add_new_env_node(t_env *env_list, char *key, char *value);
 t_env	copy_env(char **env);
 t_node	*find_node_by_key(char *key, t_env *env_list);
-void	destroy_env_list(t_env *env_list);
 
 void	exec_echo(char **args);
 void	exec_env(t_env env_list);
@@ -64,6 +64,5 @@ void	exec_cd(char **args, t_env *env_list);
 
 int		is_all_chars_valid(char *str);
 char	**split_by_first_occur(char	const	*s, char c);
-void	unlink_node(t_node *tmp, t_env *env_list);
 
 #endif

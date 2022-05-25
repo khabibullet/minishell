@@ -1,32 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anemesis <anemesis@student.21-school.ru>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/22 15:29:24 by anemesis          #+#    #+#             */
-/*   Updated: 2022/05/25 17:05:46 by anemesis         ###   ########.fr       */
+/*   Created: 2021/10/26 14:23:45 by anemesis          #+#    #+#             */
+/*   Updated: 2022/03/12 20:22:12 by anemesis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../shell.h"
+#include "../libft.h"
 
-int	main(int argc, char **argv, char **env)
+void	*ft_memmove(void *dest, const void *src, size_t n)
 {
-	t_env	env_list;
-	char *args[] = {"export", "arg=2", NULL};
-	// int	i;
-	(void)argc;
-	(void)argv;
-	// (void)env;
-	init_env_list(&env_list);
-	env_list = copy_env(env);
-	printf("\n\n\n");
-	exec_env(env_list);
-	printf("\n\n\n");
-	exec_export(args, &env_list);
-	exec_env(env_list);
-	destroy_env_list(&env_list);
-	return (0);
+	size_t	m;
+
+	if (&dest[0] > &src[0])
+	{
+		++n;
+		while (--n)
+			((unsigned char *)dest)[n - 1] = ((unsigned char *)src)[n - 1];
+		return (dest);
+	}
+	if (&dest[0] < &src[0])
+	{
+		m = 0;
+		while (m < n)
+		{
+			((unsigned char *)dest)[m] = ((unsigned char *)src)[m];
+			m++;
+		}
+		return (dest);
+	}
+	return (dest);
 }

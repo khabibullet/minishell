@@ -6,7 +6,7 @@
 #    By: anemesis <anemesis@student.21-school.ru>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/11 21:25:23 by anemesis          #+#    #+#              #
-#    Updated: 2022/04/27 16:49:56 by anemesis         ###   ########.fr        #
+#    Updated: 2022/05/25 17:48:54 by anemesis         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,30 +38,41 @@ CC			=	gcc
 
 CFLAGS		=	-Wall -Wextra -Werror
 
-all : $(NAME)
+INC			=	-I $(HEADER) -I ./libft
+
+LIB			=	-L ./libft -lft
+
+# **************************************************************************** #
+
+all : lib $(NAME)
+
+lib:
+	@make -C ./libft
 
 $(NAME) : $(OBJ) $(HEADER)
-	@$(CC) $(CFLAGS) $(OBJ) -o $(NAME)
+	@$(CC) $(CFLAGS) $(INC) $(LIB) $(OBJ) -o $(NAME)
 
 $(OBJDIR)/%.o : $(SRCDIR)/%.c
 	@mkdir -p $(OBJDIR)
-	@$(CC) $(CFLAGS) -c $< -o $@
+	@$(CC) $(CFLAGS) $(INC) -c $< -o $@
 
-bonus : $(NAME_B)
+bonus : lib $(NAME_B)
 
 $(NAME_B) : $(OBJ_B) $(HEADER_B)
-	@$(CC) $(CFLAGS) $(OBJ_B) -o $(NAME_B)
+	@$(CC) $(CFLAGS) $(INC) $(LIB) $(OBJ_B) -o $(NAME_B)
 
 $(OBJDIR_B)/%.o : $(SRCDIR_B)/%.c
 	@mkdir -p $(OBJDIR_B)
-	@$(CC) $(CFLAGS) -c $< -o $@
+	@$(CC) $(CFLAGS) $(INC) -c $< -o $@
 
 clean :
 	@rm -rf $(OBJDIR) $(OBJDIR_B)
+	@make clean -C ./libft
 
 fclean : clean
 	@rm -f $(NAME) $(NAME_B)
+	@make fclean -C ./libft
 
 re : fclean all bonus
 
-.PHONY : all bonus clean fclean re
+.PHONY : lib all bonus clean fclean re
