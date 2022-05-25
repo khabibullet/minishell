@@ -1,34 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*   exec_echo.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anemesis <anemesis@student.21-school.ru>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/26 16:24:29 by anemesis          #+#    #+#             */
-/*   Updated: 2022/05/25 16:33:12 by anemesis         ###   ########.fr       */
+/*   Created: 2022/05/25 16:47:41 by anemesis          #+#    #+#             */
+/*   Updated: 2022/05/25 16:50:37 by anemesis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../shell.h"
 
-char	*ft_strjoin(char *s1, char *s2)
+void	exec_echo(char **args)
 {
-	char	*new;
-	size_t	s1_len;
-	size_t	s2_len;
+	int	flag;
+	int	i;
 
-	if (!s1 || !s2)
-		return (NULL);
-	s1_len = ft_strlen(s1);
-	s2_len = ft_strlen(s2);
-	new = (char *)malloc(sizeof(char) * (s1_len + s2_len + 1));
-	if (!new)
+	flag = 0;
+	i = 1;
+	if (ft_strcmp(args[1], "-n") != EQUAL)
+		flag = NEWLINE;
+	else
+		i++;
+	while (args[i])
 	{
-		free(s1);
-		return (NULL);
+		if (ft_strcmp(args[i], "-n") != EQUAL)
+			printf("%s ", args[i]);
+		i++;
 	}
-	ft_strlcpy(new, s1, s1_len + 1);
-	ft_strlcat(new, s2, s1_len + s2_len + 1);
-	return (new);
+	if (flag == NEWLINE)
+		printf("\n");
+	else
+		printf("\b");
 }

@@ -6,7 +6,7 @@
 /*   By: anemesis <anemesis@student.21-school.ru>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 15:29:24 by anemesis          #+#    #+#             */
-/*   Updated: 2022/05/25 15:31:35 by anemesis         ###   ########.fr       */
+/*   Updated: 2022/05/25 16:31:48 by anemesis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@
 // 	}
 // }
 
-// void	exec_chdir(char **args, char **env)
+// void	exec_cd(char **args, char **env)
 // {
 // 	char	*old_wd;
 // 	char	*cur_wd;
@@ -53,23 +53,22 @@
 
 void	exec_builtin(char **args, char **env)
 {
-	// char	buf[1000];
+	char	buf[1000];
 
-	(void)env;
 	if (ft_strcmp(args[0], "echo") == EQUAL)
 		exec_echo(args);
-	// else if (ft_strcmp(args[0], "cd") == EQUAL)
-	// 	exec_chdir(args, env);
-	// else if (ft_strcmp(args[0], "pwd") == EQUAL)
-	// 	printf("%s", getcwd(buf, 1000));
-	// else if (ft_strcmp(args[0], "export") == EQUAL)
-	// 	exec_export(args, env);
-	// else if (ft_strcmp(args[0], "unset") == EQUAL)
-	// 	exec_unset(args, env);
-	// else if (ft_strcmp(args[0], "env") == EQUAL)
-	// 	exec_env(args, env);
+	else if (ft_strcmp(args[0], "cd") == EQUAL)
+		exec_cd(args, env);
+	else if (ft_strcmp(args[0], "pwd") == EQUAL)
+		printf("%s", getcwd(buf, 1000));
+	else if (ft_strcmp(args[0], "export") == EQUAL)
+		exec_export(args, env);
+	else if (ft_strcmp(args[0], "unset") == EQUAL)
+		exec_unset(args, env);
+	else if (ft_strcmp(args[0], "env") == EQUAL)
+		exec_env(args, env);
 	else if (ft_strcmp(args[0], "exit") == EQUAL)
-		exit(0);
+		exit(EXIT_SUCCESS);
 	else
 		return ;
 }
@@ -77,7 +76,7 @@ void	exec_builtin(char **args, char **env)
 int	main(int argc, char **argv, char **env)
 {
 	t_env	env_list;
-	char *args[] = {"export", NULL};
+	char *args[] = {"export", "arg=2", NULL};
 	// int	i;
 	(void)argc;
 	(void)argv;
