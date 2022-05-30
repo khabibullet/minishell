@@ -6,7 +6,7 @@
 /*   By: anemesis <anemesis@student.21-school.ru>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 21:29:10 by anemesis          #+#    #+#             */
-/*   Updated: 2022/05/25 16:53:48 by anemesis         ###   ########.fr       */
+/*   Updated: 2022/05/30 17:00:55 by anemesis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,4 +44,18 @@ char	**split_by_first_occur(char	const	*s, char c)
 	}
 	free(all_split);
 	return (pair);
+}
+
+void	ft_perror(int count, ...)
+{
+	va_list	ptr;
+
+	va_start(ptr, count);
+	while (count > 0)
+	{
+		ft_putstr_fd(va_arg(ptr, char *), 1);
+		count--;
+	}
+	va_end(ptr);
+	perror(NULL);
 }

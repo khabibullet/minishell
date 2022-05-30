@@ -6,7 +6,7 @@
 /*   By: anemesis <anemesis@student.21-school.ru>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 16:47:41 by anemesis          #+#    #+#             */
-/*   Updated: 2022/05/25 16:50:37 by anemesis         ###   ########.fr       */
+/*   Updated: 2022/05/30 16:12:12 by anemesis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	exec_echo(char **args)
 	flag = 0;
 	i = 1;
 	if (ft_strcmp(args[1], "-n") != EQUAL)
-		flag = NEWLINE;
+		flag = NEWLINEFLAG;
 	else
 		i++;
 	while (args[i])
@@ -29,7 +29,7 @@ void	exec_echo(char **args)
 			printf("%s ", args[i]);
 		i++;
 	}
-	if (flag == NEWLINE)
+	if (flag == NEWLINEFLAG)
 		printf("\n");
 	else
 		printf("\b");
