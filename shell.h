@@ -6,7 +6,7 @@
 /*   By: anemesis <anemesis@student.21-school.ru>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 15:29:12 by anemesis          #+#    #+#             */
-/*   Updated: 2022/05/30 17:04:49 by anemesis         ###   ########.fr       */
+/*   Updated: 2022/05/31 13:57:26 by anemesis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,4 +55,7 @@ void	exec_cd(char **args, t_env *env_list);
 int		is_all_chars_valid(char *str);
 char	**split_by_first_occur(char	const	*s, char c);
 void	ft_perror(int count, ...);
+
+void	get_paths(char ***oldpwd, char ***pwd, char ***home, t_env *list);
+void	refresh_wd_paths(char **oldpwd, char **pwd);
 #endif

@@ -1,26 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   list_handling.c                                    :+:      :+:    :+:   */
+/*   utils_env_list.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anemesis <anemesis@student.21-school.ru>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 22:10:52 by anemesis          #+#    #+#             */
-/*   Updated: 2022/05/30 17:00:54 by anemesis         ###   ########.fr       */
+/*   Updated: 2022/05/31 14:49:19 by anemesis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../shell.h"
-
-/**
-	"init_env_list" initializes default list elements
-**/
-void	init_env_list(t_env *env)
-{
-	env->size = 0;
-	env->head = NULL;
-	env->tail = NULL;
-}
 
 /**
 	"add_new_env_line" allocates and links new list node and frees input "key" and
@@ -28,15 +18,11 @@ void	init_env_list(t_env *env)
 **/
 void	add_new_env_node(t_env *env_list, char *key, char *value)
 {
-	char	*new_key;
-	char	*new_value;
 	t_node	*new_node;
 
-	new_key = ft_strdup(key);
-	new_value = ft_strdup(value);
 	new_node = malloc(sizeof(*new_node));
-	new_node->key = new_key;
-	new_node->value = new_value;
+	new_node->key = key;
+	new_node->value = value;
 	new_node->next = NULL;
 	if (env_list->size == EMPTY)
 	{
@@ -51,8 +37,6 @@ void	add_new_env_node(t_env *env_list, char *key, char *value)
 		env_list->tail = new_node;
 	}
 	env_list->size++;
-	free(key);
-	free(value);
 }
 
 /**
@@ -66,7 +50,9 @@ t_env	copy_env(char **env)
 	int		i;
 	char	**tmp;
 
-	init_env_list(&env_list);
+	env_list.size = 0;
+	env_list.head = NULL;
+	env_list.tail = NULL;
 	i = 0;
 	while (env[i])
 	{
