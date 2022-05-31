@@ -6,29 +6,11 @@
 /*   By: anemesis <anemesis@student.21-school.ru>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 16:35:28 by anemesis          #+#    #+#             */
-/*   Updated: 2022/05/30 15:24:45 by anemesis         ###   ########.fr       */
+/*   Updated: 2022/05/31 16:31:18 by anemesis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../shell.h"
-
-static void	get_paths(char ***oldpwd, char ***pwd, char ***home, t_env *list)
-{
-	t_node	*tmp;
-
-	tmp = find_node_by_key("OLDPWD", list);
-	*oldpwd = NULL;
-	if (tmp)
-		*oldpwd = &tmp->value;
-	tmp = find_node_by_key("PWD", list);
-	*pwd = NULL;
-	if (tmp)
-		*pwd = &tmp->value;
-	tmp = find_node_by_key("HOME", list);
-	*home = NULL;
-	if (tmp)
-		*home = &tmp->value;
-}
 
 static void	cd_home_env(char **oldpwd, char **pwd, char **home)
 {
@@ -37,57 +19,72 @@ static void	cd_home_env(char **oldpwd, char **pwd, char **home)
 	else if (chdir(*home) == FAIL)
 		ft_perror(3, "minishell: cd: ", *home, ": ");
 	else
-	{
-		free(*oldpwd);
-		*oldpwd = *pwd;
-		if (*oldpwd == NULL)
-			*oldpwd = ft_strdup("");
-		else
-			*pwd = getcwd(NULL, 0);
-	}
+		refresh_wd_paths(oldpwd, pwd);
 }
 
-static void	change_wds(char **oldpwd, char **pwd, char *old_ch, char *pwd_ch)
-{
-	if (old_ch != NULL)
-	{
-		free(*oldpwd);
-		*oldpwd = old_ch;
-	}
-	if (pwd_ch != NULL)
-	{
-		// free(*pwd);
-		*pwd = pwd_ch;
-	}
-}
-
-static void	cd_tilda(char **oldpwd, char **pwd, char **home)
+static void	cd_tilda(char **oldpwd, char **pwd, char **home, char *path)
 {
 	char	*buf;
 
-	if (home == NULL || ft_strcmp(*home, "") != EQUAL)
+	if (ft_strcmp(path, "~") == EQUAL)
 	{
-		if (home == NULL)
-			buf = getenv("HOME");
-		else
-			buf = *home;
-		if (chdir(buf) == FAIL)
+		if (home == NULL || ft_strcmp(*home, "") != EQUAL)
 		{
-			ft_perror(3, "minishell: cd: ", buf, ": ");
-			return ;
+			if (home == NULL)
+				buf = getenv("HOME");
+			else
+				buf = *home;
+			if (chdir(buf) == FAIL)
+				ft_perror(3, "minishell: cd: ", buf, ": ");
+			else
+				refresh_wd_paths(oldpwd, pwd);
 		}
 	}
-	if (pwd != NULL)
-	{
-		if (oldpwd != NULL)
-			change_wds(oldpwd, pwd, *pwd, getcwd(NULL, 0));
-		else
-			change_wds(oldpwd, pwd, NULL, getcwd(NULL, 0));
-	}
-	else if (oldpwd != NULL)
-		change_wds(oldpwd, pwd, ft_strdup(""), NULL);
 	else
-		return ;
+	{
+		buf = ft_strjoin("/Users/", path + 1);
+		if (chdir(buf) == FAIL)
+			ft_perror(3, "minishell: cd: ", buf, ": ");
+		else
+			refresh_wd_paths(oldpwd, pwd);
+		free(buf);
+	}
+}
+
+static void	cd_dash(char **oldpwd, char **pwd, char **home, char *opt)
+{
+	if (ft_strcmp(opt, "-") == EQUAL)
+	{
+		if (oldpwd == NULL)
+			printf("minishell: cd: OLDPWD not set\n");
+		else
+		{
+			if (chdir(*oldpwd) == FAIL)
+				ft_perror(3, "minishell: cd: ", *oldpwd, ": ");
+			else
+				refresh_wd_paths(oldpwd, pwd);
+		}
+	}
+	if (ft_strcmp(opt, "--") == EQUAL)
+	{
+		if (home == NULL)
+			printf("minishell: cd: HOME not set\n");
+		else
+		{
+			if (chdir(*home) == FAIL)
+				ft_perror(3, "minishell: cd: ", *home, ": ");
+			else
+				refresh_wd_paths(oldpwd, pwd);
+		}
+	}
+}
+
+static void	cd_path(char **oldpwd, char **pwd, char *path)
+{
+	if (chdir(path) == FAIL)
+		ft_perror(3, "minishell: cd: ", path, ": ");
+	else
+		refresh_wd_paths(oldpwd, pwd);
 }
 
 void	exec_cd(char **args, t_env *env_list)
@@ -99,7 +96,10 @@ void	exec_cd(char **args, t_env *env_list)
 	get_paths(&oldpwd, &pwd, &home, env_list);
 	if (args[1] == NULL || ft_strcmp(args[1], "~-") == EQUAL)
 		cd_home_env(oldpwd, pwd, home);
-	else if (ft_strcmp(args[1], "~") == EQUAL)
-		cd_tilda(oldpwd, pwd, home);
-	return ;
+	else if (args[1][0] == '~')
+		cd_tilda(oldpwd, pwd, home, args[1]);
+	else if (args[1][0] == '-')
+		cd_dash(oldpwd, pwd, home, args[1]);
+	else
+		cd_path(oldpwd, pwd, args[1]);
 }
