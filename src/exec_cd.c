@@ -6,7 +6,7 @@
 /*   By: anemesis <anemesis@student.21-school.ru>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 16:35:28 by anemesis          #+#    #+#             */
-/*   Updated: 2022/05/31 18:58:02 by anemesis         ###   ########.fr       */
+/*   Updated: 2022/06/01 14:45:28 by anemesis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,28 +53,28 @@ static void	cd_tilda(char **oldpwd, char **pwd, char **home, char *path)
 
 static void	cd_dash(char **oldpwd, char **pwd, char **home, char *opt)
 {
-	if (ft_strcmp(opt, "-") == EQUAL)
+	if (ft_strcmp(opt, "-") == EQUAL && oldpwd == NULL)
+		printf("minishell: cd: OLDPWD not set\n");
+	else if (ft_strcmp(opt, "-") == EQUAL)
 	{
-		if (oldpwd == NULL)
-			printf("minishell: cd: OLDPWD not set\n");
+		if (chdir(*oldpwd) == FAIL)
+			ft_perror(3, "minishell: cd: ", *oldpwd, ": ");
 		else
 		{
-			if (chdir(*oldpwd) == FAIL)
-				ft_perror(3, "minishell: cd: ", *oldpwd, ": ");
-			else
-				refresh_wd_paths(oldpwd, pwd);
+			refresh_wd_paths(oldpwd, pwd);
+			printf("%s\n", *pwd);
 		}
 	}
-	if (ft_strcmp(opt, "--") == EQUAL)
+	else if (ft_strcmp(opt, "--") == EQUAL && home == NULL)
+		printf("minishell: cd: HOME not set\n");
+	else if (ft_strcmp(opt, "--") == EQUAL)
 	{
-		if (home == NULL)
-			printf("minishell: cd: HOME not set\n");
+		if (chdir(*home) == FAIL)
+			ft_perror(3, "minishell: cd: ", *home, ": ");
 		else
 		{
-			if (chdir(*home) == FAIL)
-				ft_perror(3, "minishell: cd: ", *home, ": ");
-			else
-				refresh_wd_paths(oldpwd, pwd);
+			refresh_wd_paths(oldpwd, pwd);
+			printf("%s\n", *pwd);
 		}
 	}
 }
