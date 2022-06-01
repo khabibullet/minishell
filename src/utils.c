@@ -6,7 +6,7 @@
 /*   By: anemesis <anemesis@student.21-school.ru>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 21:29:10 by anemesis          #+#    #+#             */
-/*   Updated: 2022/05/30 17:00:55 by anemesis         ###   ########.fr       */
+/*   Updated: 2022/05/31 18:57:40 by anemesis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	is_all_chars_valid(char *str)
 {
 	while (*str)
 	{
-		if (((int)*str < 65 && (int)*str > 32)
+		if (((int)*str < 65 && (int)*str > 32 && (int)*str != 43)
 			|| ((int)*str < 95 && (int)*str > 90)
 			|| ((int)*str < 128 && (int)*str > 122)
 			|| ((int)*str == 96))

@@ -6,7 +6,7 @@
 /*   By: anemesis <anemesis@student.21-school.ru>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 16:45:33 by anemesis          #+#    #+#             */
-/*   Updated: 2022/05/25 16:53:28 by anemesis         ###   ########.fr       */
+/*   Updated: 2022/05/31 18:45:48 by anemesis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,7 @@ static void	handle_key_n_value(char **pair, t_env *env_list)
 
 	if (is_all_chars_valid(pair[KEY]) == INVALID)
 	{
-		printf("minishell: export: `%s': not a valid identifier\n",
-			pair[KEY]);
+		printf("minishell: export: `%s': not a valid identifier\n", pair[KEY]);
 		free(pair[KEY]);
 		if (pair[VALUE] != NULL)
 			free(pair[VALUE]);
