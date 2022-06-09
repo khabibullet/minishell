@@ -6,7 +6,7 @@
 /*   By: anemesis <anemesis@student.21-school.ru>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 15:29:24 by anemesis          #+#    #+#             */
-/*   Updated: 2022/06/09 15:39:28 by anemesis         ###   ########.fr       */
+/*   Updated: 2022/06/09 15:41:33 by anemesis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,18 @@
 int	main(int argc, char **argv, char **env)
 {
 	t_env	env_list;
+	char	**env_arr;
 
 	(void)argc;
 	(void)argv;
 	env_list = copy_env(env);
+	env_arr = list_to_array(&env_list);
 	printf("\n");
-	exec_builtins((char *[]){"export", "ada+=asda", NULL}, &env_list);
-	exec_builtins((char *[]){"env", NULL}, &env_list);
+	while (*env_arr)
+	{
+		printf("%s\n", *env_arr);
+		env_arr++;
+	}
 	printf("\n");
 	destroy_env_list(&env_list);
 	return (0);

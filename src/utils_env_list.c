@@ -6,7 +6,7 @@
 /*   By: anemesis <anemesis@student.21-school.ru>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 22:10:52 by anemesis          #+#    #+#             */
-/*   Updated: 2022/06/01 15:58:50 by anemesis         ###   ########.fr       */
+/*   Updated: 2022/06/09 15:41:20 by anemesis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,4 +100,26 @@ void	destroy_env_list(t_env *env_list)
 		free(node_to_free->value);
 		free(node_to_free);
 	}
+}
+
+char	**list_to_array(t_env *env_list)
+{
+	char	**env_array;
+	t_node	*tmp_node;
+	char	**array_head;
+	char	*tmp_str;
+
+	env_array = malloc(sizeof(*env_array) * env_list->size);
+	array_head = env_array;
+	tmp_node = env_list->head;
+	while (tmp_node)
+	{
+		tmp_str = ft_strjoin(tmp_node->key, "=");
+		*env_array = ft_strjoin(tmp_str, tmp_node->value);
+		free(tmp_str);
+		tmp_node = tmp_node->next;
+		env_array++;
+	}
+	*env_array = NULL;
+	return (array_head);
 }

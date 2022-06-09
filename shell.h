@@ -6,7 +6,7 @@
 /*   By: anemesis <anemesis@student.21-school.ru>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 15:29:12 by anemesis          #+#    #+#             */
-/*   Updated: 2022/05/31 13:57:26 by anemesis         ###   ########.fr       */
+/*   Updated: 2022/06/09 15:25:00 by anemesis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ void	destroy_env_list(t_env *env_list);
 void	add_new_env_node(t_env *env_list, char *key, char *value);
 t_env	copy_env(char **env);
 t_node	*find_node_by_key(char *key, t_env *env_list);
+char	**list_to_array(t_env *env_list);
 
 void	exec_builtins(char **args, t_env *env_list);
 void	exec_echo(char **args);
